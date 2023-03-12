@@ -13,10 +13,21 @@
                                 
                                 <tr>
                                     <div class="row">
-                                    <div class="col-4"><th scope="col">Nama</th></div>
-                                    <div class="col-4"><th scope="col">Harga</th></div>
-                                    <div class="col-2 "><th scope="col">Stok</th></div>
-                                    <div class="col-2 "><th scope="col">Aksi</th></div>
+                                      <div class="col-2">
+                                        <th scope="col">No</th>
+                                      </div>
+                                      <div class="col-3">
+                                        <th scope="col">Nama</th>
+                                      </div>
+                                      <div class="col-3">
+                                        <th scope="col">Harga</th>
+                                      </div>
+                                      <div class="col-2">
+                                        <th scope="col">Stok</th>
+                                      </div>
+                                      <div class="col-2">
+                                        <th scope="col">Aksi</th>
+                                      </div>
                                     </div>
                                 </tr>
                                 
@@ -24,8 +35,9 @@
                             <tbody>
                                 <tr v-for="(barang, index) in barangs" :key="index">
                                     <div class="row">
-                                        <div class="col-4"><td>{{ barang.name }}</td></div>
-                                        <div class="col-4"><td>Rp. {{ barang.price }}</td></div>
+                                        <div class="col-2"><td>{{ index + 1 }}</td></div>
+                                        <div class="col-3"><td>{{ barang.name }}</td></div>
+                                        <div class="col-3"><td>Rp. {{ barang.price }}</td></div>
                                         <div class="col-2"><td>{{ barang.quantity }}</td></div>
                                         <div class="col-2"><td class="text-center">
                                         <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editModal">

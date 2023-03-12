@@ -40,10 +40,10 @@
                                         <div class="col-3"><td>Rp. {{ barang.price }}</td></div>
                                         <div class="col-2"><td>{{ barang.quantity }}</td></div>
                                         <div class="col-2"><td class="text-center">
-                                        <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editModal">
+                                        <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" @click="editBarang(index)" data-bs-target="#editModal">
                                           Edit
                                         </button>
-                                        <button @click.prevent="postDelete(barang.id)" class="btn btn-sm btn-danger ml-1">Delete</button>
+                                        <button class="btn btn-sm btn-danger ml-1">Delete</button>
                                     </td></div>
                                     </div>
                                 </tr>
@@ -92,29 +92,28 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Barang</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="form-group mb-2">
-              <label for="title" class="font-weight-bold">NAMA</label>
-              <input type="text" class="form-control" v-model="newBarang.name" placeholder="Masukkan Nama Barang">
+              <label for="title" class="font-weight-bold">Nama</label>
+              <input type="text" class="form-control" v-model="changeBarang.name" placeholder="Masukkan Nama Barang">
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold">Harga</label>
-              <input type="text" class="form-control" rows="4" v-model="newBarang.price" placeholder="Masukkan Harga Barang">
+              <input type="text" class="form-control" rows="4" v-model="changeBarang.price" placeholder="Masukkan Harga Barang">
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold">Stok</label>
-              <input type="number" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang">
+              <input type="number" class="form-control" rows="4" v-model="changeBarang.quantity" placeholder="Masukkan Stok Barang">
           </div>
-          <button type="submit" class="btn btn-success btn-sm">SIMPAN</button>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" @click="tutupModal" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" @click="updateBarang" class="btn btn-primary">Simpan</button>
       </div>
     </div>
   </div>
@@ -124,12 +123,19 @@
 import {reactive, onMounted, ref} from 'vue'
 export default {
     setup() {
-        //state posts
         const newBarang = reactive({
             name: '' ,
             price: '' ,
             quantity:1 ,
         })
+
+        const changeBarang = reactive({
+            id:null,
+            name: '' ,
+            price: '' ,
+            quantity:1 ,
+        })
+
         //state validation
         const validation = ref([])
 
@@ -202,6 +208,13 @@ export default {
           newBarang.name = ''
           newBarang.price = ''
           newBarang.quantity = 1
+          changeBarang.name = ''
+          changeBarang.price = ''
+          changeBarang.quantity = 1
+          document.getElementById('tambahModal').classList.remove("show")
+          document.getElementById('editModal').classList.remove("show")
+          document.getElementById('tambahModal').style.display = "none"
+          document.getElementById('editModal').style.display = "none"
         }
 
         function insertBarang(){
@@ -218,24 +231,22 @@ export default {
           }
         }
 
-        function postDelete(id) {       
-           //delete data post by ID
-          //  if (confirm("Anda Yakin?")) {
-          //   axios.delete(`http://127.0.0.1:8000/api/barang/${id}`)
-          //   .then(() => {
-          //     alert("Data Dihapus!") 
-          //     //splice posts 
-          //     //find post index
-          //     const index = this.barangs.findIndex(barang => barang.id === id)
-          //     if (~index) {
-          //     // if the post exists in array
-          //     this.barangs.splice(index, 1)
-          //     }
-          //   })
-          //     .catch(error => {
-          //         console.log(error.response.data)
-          //     })
-          // }
+        function editBarang(index){
+          changeBarang.id = index
+          changeBarang.name = barangs.value[index].name
+          changeBarang.price = barangs.value[index].price
+          changeBarang.quantity = barangs.value[index].quantity
+        }
+
+        function updateBarang(){
+          if(changeBarang.name == "" && changeBarang.price == ""){
+            alert("Lengkapi semua data")
+          }else{
+            barangs.value[changeBarang.id].name = changeBarang.name
+            barangs.value[changeBarang.id].price = changeBarang.price
+            barangs.value[changeBarang.id].quantity = changeBarang.quantity
+            tutupModal();
+          }
         }
 
 
@@ -243,10 +254,12 @@ export default {
         return {
             barangs,
             newBarang,
+            changeBarang,
             validation,
-            postDelete,
             tutupModal,
-            insertBarang
+            insertBarang,
+            editBarang,
+            updateBarang
         }
     }
 }

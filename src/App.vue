@@ -13,7 +13,7 @@
                                 
                                 <tr>
                                     <div class="row">
-                                      <div class="col-2">
+                                      <div class="col-1">
                                         <th scope="col">No</th>
                                       </div>
                                       <div class="col-3">
@@ -35,7 +35,7 @@
                             <tbody>
                                 <tr v-for="(barang, index) in barangs" :key="index">
                                     <div class="row">
-                                        <div class="col-2"><td>{{ index + 1 }}</td></div>
+                                        <div class="col-1"><td>{{ index + 1 }}</td></div>
                                         <div class="col-3"><td>{{ barang.name }}</td></div>
                                         <div class="col-3"><td>Rp. {{ barang.price }}</td></div>
                                         <div class="col-2"><td>{{ barang.quantity }}</td></div>

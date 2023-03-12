@@ -205,12 +205,17 @@ export default {
         }
 
         function insertBarang(){
-          barangs.value.push({
-            "id": barangs.length + 1,
-            "name": newBarang.name,
-            "price": newBarang.price,
-            "quantity": newBarang.quantity
-          });
+          if(newBarang.name == "" && newBarang.price == ""){
+            alert("Lengkapi semua data")
+          }else{
+            barangs.value.push({
+              "id": barangs.length + 1,
+              "name": newBarang.name,
+              "price": newBarang.price,
+              "quantity": newBarang.quantity
+            });
+            tutupModal();
+          }
         }
 
         function postDelete(id) {       

@@ -25,13 +25,13 @@
                                 <tr v-for="(barang, index) in barangs" :key="index">
                                     <div class="row">
                                         <div class="col-4"><td>{{ barang.name }}</td></div>
-                                        <div class="col-4"><td>{{ barang.price }}</td></div>
+                                        <div class="col-4"><td>Rp. {{ barang.price }}</td></div>
                                         <div class="col-2"><td>{{ barang.quantity }}</td></div>
                                         <div class="col-2"><td class="text-center">
                                         <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editModal">
                                           Edit
                                         </button>
-                                        <button @click.prevent="postDelete(barang.id)" class="btn btn-sm btn-danger ml-1">DELETE</button>
+                                        <button @click.prevent="postDelete(barang.id)" class="btn btn-sm btn-danger ml-1">Delete</button>
                                     </td></div>
                                     </div>
                                 </tr>
@@ -68,8 +68,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-primary">Simpan</button>
+        <button type="button" @click="tutupModal" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" @click="insertBarang" class="btn btn-primary">Simpan</button>
       </div>
     </div>
   </div>
@@ -109,11 +109,11 @@
 </div>
 </template>
 <script>
-import {onMounted,ref} from 'vue'
+import {reactive, onMounted, ref} from 'vue'
 export default {
     setup() {
         //state posts
-        const newBarang = ref({
+        const newBarang = reactive({
             name: '' ,
             price: '' ,
             quantity:1 ,
@@ -186,6 +186,21 @@ export default {
               }
           ])
 
+        function tutupModal(){
+          newBarang.name = ''
+          newBarang.price = ''
+          newBarang.quantity = 1
+        }
+
+        function insertBarang(){
+          barangs.value.push({
+            "id": barangs.length + 1,
+            "name": newBarang.name,
+            "price": newBarang.price,
+            "quantity": newBarang.quantity
+          });
+        }
+
         function postDelete(id) {       
            //delete data post by ID
           //  if (confirm("Anda Yakin?")) {
@@ -205,12 +220,16 @@ export default {
           //     })
           // }
         }
+
+
         //return
         return {
             barangs,
             newBarang,
             validation,
-            postDelete
+            postDelete,
+            tutupModal,
+            insertBarang
         }
     }
 }

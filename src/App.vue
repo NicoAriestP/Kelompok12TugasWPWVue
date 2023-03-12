@@ -48,15 +48,28 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Barang</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <form>
+          <div class="form-group mb-2">
+              <label for="title" class="font-weight-bold mb-2">Nama</label>
+              <input type="text" class="form-control" v-model="newBarang.name" placeholder="Masukkan Nama Barang">
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold mb-2">Harga</label>
+              <input type="text" class="form-control" rows="4" v-model="newBarang.price" placeholder="Masukkan Harga Barang">
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold mb-2">Stok</label>
+              <input type="number" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang">
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary">Simpan</button>
       </div>
     </div>
   </div>
@@ -71,7 +84,21 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <form>
+          <div class="form-group mb-2">
+              <label for="title" class="font-weight-bold">NAMA</label>
+              <input type="text" class="form-control" v-model="newBarang.name" placeholder="Masukkan Nama Barang">
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold">Harga</label>
+              <input type="text" class="form-control" rows="4" v-model="newBarang.price" placeholder="Masukkan Harga Barang">
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold">Stok</label>
+              <input type="number" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang">
+          </div>
+          <button type="submit" class="btn btn-success btn-sm">SIMPAN</button>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -85,6 +112,16 @@
 import {onMounted,ref} from 'vue'
 export default {
     setup() {
+        //state posts
+        const newBarang = ref({
+            name: '' ,
+            price: '' ,
+            quantity:1 ,
+        })
+        //state validation
+        const validation = ref([])
+
+
         //reactive state
         let barangs = ref([
               {
@@ -148,28 +185,6 @@ export default {
                 "quantity": 50
               }
           ])
-
-        //state posts
-        const newBarang = ref({
-            name: '' ,
-            price: '' ,
-            quantity:1 ,
-        })
-        //state validation
-        const validation = ref([])
-
-        //mounted
-        // onMounted(() => {
-        //     //get API from Laravel Backend
-        //     axios.get('http://127.0.0.1:8000/api/barang')
-        //     .then(response => {
-        //       console.log(response.data)
-        //       //assign state posts with response data
-        //       barangs.value = response.data.barang
-        //     }).catch(error => {
-        //         console.log(error.response.data)
-        //     })
-        // })
 
         function postDelete(id) {       
            //delete data post by ID

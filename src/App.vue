@@ -1,8 +1,10 @@
+<style scoped>
+</style>
 <template>
     <div class="container mt-5">
         <div class="row">
             <div class="col-12">
-                <div class="card border-0 rounded shadow-lg">
+                <div class="card border-0 rounded shadow-lg" id="card-container">
                     <div class="card-body">
                         <h4>Data Barang</h4>
                         <hr>
@@ -43,7 +45,7 @@
                                         <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" @click="editBarang(index)" data-bs-target="#editModal">
                                           Edit
                                         </button>
-                                        <button class="btn btn-sm btn-danger ml-1">Delete</button>
+                                        <button class="btn btn-sm btn-danger ml-1" @click="deleteBarang(index)">Delete</button>
                                     </td></div>
                                     </div>
                                 </tr>
@@ -88,7 +90,7 @@
 </div>
 
 <!-- Modal untuk Edit -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" ref="formDialog" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -119,29 +121,24 @@
   </div>
 </div>
 </template>
-<script>
-import {reactive, onMounted, ref} from 'vue'
-export default {
-    setup() {
-        const newBarang = reactive({
-            name: '' ,
-            price: '' ,
-            quantity:1 ,
-        })
-
-        const changeBarang = reactive({
-            id:null,
-            name: '' ,
-            price: '' ,
-            quantity:1 ,
-        })
-
-        //state validation
-        const validation = ref([])
-
-
-        //reactive state
-        let barangs = ref([
+<script lang="ts">
+    // import * as bootstrap from 'bootstrap';
+    // window.bootstrap = bootstrap;
+    export default {
+        data: () => ({
+            newBarang: {
+                name: '' ,
+                price: '' ,
+                quantity:1 
+            },
+            changeBarang: {
+                id:null,
+                name: '' ,
+                price: '' ,
+                quantity:1 ,
+            },
+            validation: [],
+            barangs: [
               {
                 "id": 1,
                 "name": "T-Shirt",
@@ -202,65 +199,60 @@ export default {
                 "price": 14.99,
                 "quantity": 50
               }
-          ])
+          ],
+        }),
+        created() {
+        },
+        methods: {
+            insertBarang() {
+                if(this.newBarang.name == "" && this.newBarang.price == ""){
+                    alert("Lengkapi semua data")
+                }else{
+                    this.barangs.push({
+                        "id": this.barangs.length + 1,
+                        "name": this.newBarang.name,
+                        "price": this.newBarang.price,
+                        "quantity": this.newBarang.quantity
+                    })
 
-        function tutupModal(){
-          newBarang.name = ''
-          newBarang.price = ''
-          newBarang.quantity = 1
-          changeBarang.name = ''
-          changeBarang.price = ''
-          changeBarang.quantity = 1
-          document.getElementById('tambahModal').classList.remove("show")
-          document.getElementById('editModal').classList.remove("show")
-          document.getElementById('tambahModal').style.display = "none"
-          document.getElementById('editModal').style.display = "none"
-        }
+                    this.tutupModal()
+                }
+            },
+            editBarang(index) {
+                this.changeBarang.id = index
+                this.changeBarang.name = this.barangs[index].name
+                this.changeBarang.price = this.barangs[index].price
+                this.changeBarang.quantity = this.barangs[index].quantity
+            },
+            updateBarang() {
+                if(this.changeBarang.name == "" && this.changeBarang.price == ""){
+                    alert("Lengkapi semua data")
+                }else{
+                    this.barangs[this.changeBarang.id].name = this.changeBarang.name
+                    this.barangs[this.changeBarang.id].price = this.changeBarang.price
+                    this.barangs[this.changeBarang.id].quantity = this.changeBarang.quantity
 
-        function insertBarang(){
-          if(newBarang.name == "" && newBarang.price == ""){
-            alert("Lengkapi semua data")
-          }else{
-            barangs.value.push({
-              "id": barangs.length + 1,
-              "name": newBarang.name,
-              "price": newBarang.price,
-              "quantity": newBarang.quantity
-            });
-            tutupModal();
-          }
-        }
+                    this.tutupModal()
+                }
+            },
+            tutupModal() {
+                this.newBarang.name = ''
+                this.newBarang.price = ''
+                this.newBarang.quantity = 1
+                this.changeBarang.name = ''
+                this.changeBarang.price = ''
+                this.changeBarang.quantity = 1
 
-        function editBarang(index){
-          changeBarang.id = index
-          changeBarang.name = barangs.value[index].name
-          changeBarang.price = barangs.value[index].price
-          changeBarang.quantity = barangs.value[index].quantity
-        }
+                document.getElementById('tambahModal').classList.remove("show")
+                document.getElementById('tambahModal').style.display = "none";
 
-        function updateBarang(){
-          if(changeBarang.name == "" && changeBarang.price == ""){
-            alert("Lengkapi semua data")
-          }else{
-            barangs.value[changeBarang.id].name = changeBarang.name
-            barangs.value[changeBarang.id].price = changeBarang.price
-            barangs.value[changeBarang.id].quantity = changeBarang.quantity
-            tutupModal();
-          }
-        }
-
-
-        //return
-        return {
-            barangs,
-            newBarang,
-            changeBarang,
-            validation,
-            tutupModal,
-            insertBarang,
-            editBarang,
-            updateBarang
-        }
+                document.getElementById('editModal').classList.remove("show")
+                document.getElementById('editModal').style.display = "none";
+                document.querySelector('.modal-backdrop').remove();
+            },
+            deleteBarang(idx) {
+                this.barangs.splice(idx, 1);
+            }
+        },
     }
-}
 </script>

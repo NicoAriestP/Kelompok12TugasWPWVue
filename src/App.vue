@@ -8,7 +8,11 @@
                     <div class="card-body">
                         <h4>Data Barang</h4>
                         <hr>
+                        <Popup v-if="show">
+                            Berhasil {{ msgBox }}
+                        </Popup>
                         <button type="button" class="btn btn-md btn-success mx-2" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah</button>
+                            <!-- <button type="button" class="btn btn-xs btn-secondary" @click="show = false">Tutup</button> -->
 
                         <table class="table table-responsive table-bordered mt-4 border-1">
                             <thead class="thead bg-dark text-light">
@@ -122,8 +126,7 @@
 </div>
 </template>
 <script lang="ts">
-    // import * as bootstrap from 'bootstrap';
-    // window.bootstrap = bootstrap;
+    import Popup from './components/Popup.vue'
     export default {
         data: () => ({
             newBarang: {
@@ -137,6 +140,8 @@
                 price: '' ,
                 quantity:1 ,
             },
+            msgBox: '',
+            show: false,
             validation: [],
             barangs: [
               {
@@ -202,7 +207,9 @@
           ],
         }),
         created() {
+            this.show = false
         },
+        components: { Popup },
         methods: {
             insertBarang() {
                 if(this.newBarang.name == "" && this.newBarang.price == ""){
@@ -214,7 +221,7 @@
                         "price": this.newBarang.price,
                         "quantity": this.newBarang.quantity
                     })
-
+                    this.msgBox = 'tambah data'
                     this.tutupModal()
                 }
             },
@@ -232,6 +239,7 @@
                     this.barangs[this.changeBarang.id].price = this.changeBarang.price
                     this.barangs[this.changeBarang.id].quantity = this.changeBarang.quantity
 
+                    this.msgBox = 'edit data'
                     this.tutupModal()
                 }
             },
@@ -249,9 +257,19 @@
                 document.getElementById('editModal').classList.remove("show")
                 document.getElementById('editModal').style.display = "none";
                 document.querySelector('.modal-backdrop').remove();
+                this.popup()
             },
             deleteBarang(idx) {
                 this.barangs.splice(idx, 1);
+                this.msgBox = 'hapus data'
+            },
+            popup() {
+                this.show = true
+                // this.show = false
+                // setTimeout(() => {
+                // }, 2000);
+                // setTimeout(() => {
+                // }, 2000);
             }
         },
     }

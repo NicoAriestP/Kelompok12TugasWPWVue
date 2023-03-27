@@ -256,17 +256,17 @@
                   return
                 }
                 // Harga harus berupa angka
-                else if (isNaN(parseFloat(this.newBarang.price))) {
+                else if (isNaN(this.newBarang.price)) {
                   alert("Harga harus diisi dengan angka")
                   return
                 }
                 // Harga tidak boleh kurang dari atau sama dengan 0 rupiah
-                else if (parseFloat(this.newBarang.price <= 0)) {
+                else if (this.newBarang.price <= 0) {
                   alert("Harga harus lebih besar dari 0")
                   return
                 }
                 // Stok tidak boleh kurang dari 0
-                else if (parseFloat(this.newBarang.quantity < 0)) {
+                else if (this.newBarang.quantity < 0) {
                   alert("Stok harus lebih besar atau sama dengan dari 0")
                   return
                 }else{

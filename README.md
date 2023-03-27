@@ -1,6 +1,7 @@
 # TugasWPWVue
-Tugas Praktikum Kelompok WPW membuat aplikasi Vue js 3 sederhana
-Kelompok12
+Tugas Praktikum Kelompok 12 WPW membuat Aplikasi Pengelolaan Barang Sederhana menggunakan Vue Js 3
+
+List Anggota Kelompok 12 :
 
 Dwiky Anggarda Amien		 (3122510604)
 

@@ -29,8 +29,11 @@
                                       <div class="col-2">
                                         <th scope="col">Harga</th>
                                       </div>
-                                      <div class="col-2">
+                                      <div class="col-1">
                                         <th scope="col">Stok</th>
+                                      </div>
+                                      <div class="col-2">
+                                        <th scope="col">Pajak</th>
                                       </div>
                                       <div class="col-2">
                                         <th scope="col">Aksi</th>
@@ -46,7 +49,12 @@
                                         <div class="col-2"><td>{{ barang.name }}</td></div>
                                         <div class="col-2"><td>{{ barang.category }}</td></div>
                                         <div class="col-2"><td>Rp. {{ barang.price.toLocaleString("id-ID") }}</td></div>
-                                        <div class="col-2"><td>{{ barang.quantity }}</td></div>
+                                        <div class="col-1"><td>{{ barang.quantity }}</td></div>
+                                        <div class="col-2">
+                                          <td v-if="barang.tax == 'free'">Bebas Pajak</td>
+                                          <td v-if="barang.tax == 'ppn'">PPN (10%)</td>
+                                          <td v-if="barang.tax == 'pph'">PPH (2%)</td>
+                                        </div>
                                         <div class="col-2"><td class="text-center">
                                         <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" @click="editBarang(index)" data-bs-target="#editModal">
                                           Edit
@@ -91,6 +99,21 @@
               <label for="content" class="font-weight-bold mb-2">Stok</label>
               <input type="number" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang">
           </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold mb-2">Pajak</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="ppn">
+            <label class="form-check-label" for="inlineRadio1">PPN 10%</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="pph">
+            <label class="form-check-label" for="inlineRadio1">PPH 21 (2%)</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="free">
+            <label class="form-check-label" for="inlineRadio1">Bebas Pajak</label>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -130,6 +153,21 @@
               <label for="content" class="font-weight-bold">Stok</label>
               <input type="number" class="form-control" rows="4" v-model="changeBarang.quantity" placeholder="Masukkan Stok Barang">
           </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold mb-2">Pajak</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="ppn">
+            <label class="form-check-label" for="inlineRadio1">PPN 10%</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="pph">
+            <label class="form-check-label" for="inlineRadio1">PPH 21 (2%)</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="free">
+            <label class="form-check-label" for="inlineRadio1">Bebas Pajak</label>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -148,7 +186,8 @@
                 name: '' ,
                 category:'Pilih Kategori',
                 price: '' ,
-                quantity:1 
+                quantity:1,
+                tax:'free'
             },
             changeBarang: {
                 id:null,
@@ -156,6 +195,7 @@
                 category:'',
                 price: '' ,
                 quantity:1 ,
+                tax:''
             },
             msgBox: '',
             show: false,
@@ -167,35 +207,40 @@
                     "name": "T-Shirt",
                     "price": 15000,
                     "quantity": 50,
-                    "category": "Clothing"
+                    "category": "Clothing",
+                    "tax": "free",
                 },
                 {
                     "id": 2,
                     "name": "Jeans",
                     "price": 40000,
                     "quantity": 20,
-                    "category": "Clothing"
+                    "category": "Clothing",
+                    "tax": "ppn",
                 },
                 {
                     "id": 3,
                     "name": "Sneakers",
                     "price": 60000,
                     "quantity": 10,
-                    "category": "Footwear"
+                    "category": "Footwear",
+                    "tax": "pph",
                 },
                 {
                     "id": 4,
                     "name": "Hoodie",
                     "price": 40000,
                     "quantity": 30,
-                    "category": "Clothing"
+                    "category": "Clothing",
+                    "tax": "pph",
                 },
                 {
                     "id": 5,
                     "name": "Jacket",
                     "price": 80000,
                     "quantity": 15,
-                    "category": "Clothing"
+                    "category": "Clothing",
+                    "tax": "free",
                 },
             ],
         }),
@@ -213,7 +258,8 @@
                         "name": this.newBarang.name,
                         "category": this.newBarang.category,
                         "price": this.newBarang.price,
-                        "quantity": this.newBarang.quantity
+                        "quantity": this.newBarang.quantity,
+                        "tax": this.newBarang.tax
                     })
                     this.msgBox = 'tambah data'
                     this.tutupModal()
@@ -226,6 +272,7 @@
                 this.changeBarang.category = this.barangs[index].category
                 this.changeBarang.price = this.barangs[index].price
                 this.changeBarang.quantity = this.barangs[index].quantity
+                this.changeBarang.tax = this.barangs[index].tax
             },
             updateBarang() {
                 if(this.changeBarang.name == "" && this.changeBarang.price == ""){
@@ -235,6 +282,7 @@
                     this.barangs[this.changeBarang.id].category = this.changeBarang.category
                     this.barangs[this.changeBarang.id].price = this.changeBarang.price
                     this.barangs[this.changeBarang.id].quantity = this.changeBarang.quantity
+                    this.barangs[this.changeBarang.id].tax = this.changeBarang.tax
 
                     this.msgBox = 'edit data'
                     this.tutupModal()
@@ -246,10 +294,12 @@
                 this.newBarang.category = 'Pilih Kategori'
                 this.newBarang.price = ''
                 this.newBarang.quantity = 1
+                this.newBarang.tax = 'free'
                 this.changeBarang.name = ''
                 this.changeBarang.category = ''
                 this.changeBarang.price = ''
                 this.changeBarang.quantity = 1
+                this.changeBarang.tax = ''
 
                 document.getElementById('tambahModal').classList.remove("show")
                 document.getElementById('tambahModal').style.display = "none";

@@ -12,7 +12,7 @@
                             Berhasil {{ msgBox }}
                         </Popup>
                         <button type="button" class="btn btn-md btn-success mx-2" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah</button>
-                        <button type="button" class="btn btn-xs btn-secondary" @click="show = false">Tutup</button>
+                        <!-- <button type="button" class="btn btn-xs btn-secondary" @click="show = false">Tutup</button> -->
                         <table class="table table-responsive table-bordered mt-4 border-1">
                             <thead class="thead bg-dark text-light">
                                 <tr>

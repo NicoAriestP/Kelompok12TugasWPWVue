@@ -45,7 +45,7 @@
                                         <div class="col-1"><td>{{ index + 1 }}</td></div>
                                         <div class="col-2"><td>{{ barang.name }}</td></div>
                                         <div class="col-2"><td>{{ barang.category }}</td></div>
-                                        <div class="col-2"><td>Rp. {{ barang.price }}</td></div>
+                                        <div class="col-2"><td>Rp. {{ barang.price.toLocaleString("id-ID") }}</td></div>
                                         <div class="col-2"><td>{{ barang.quantity }}</td></div>
                                         <div class="col-2"><td class="text-center">
                                         <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" @click="editBarang(index)" data-bs-target="#editModal">
@@ -165,35 +165,35 @@
                 {
                     "id": 1,
                     "name": "T-Shirt",
-                    "price": 15.99,
+                    "price": 15000,
                     "quantity": 50,
                     "category": "Clothing"
                 },
                 {
                     "id": 2,
                     "name": "Jeans",
-                    "price": 39.99,
+                    "price": 40000,
                     "quantity": 20,
                     "category": "Clothing"
                 },
                 {
                     "id": 3,
                     "name": "Sneakers",
-                    "price": 59.99,
+                    "price": 60000,
                     "quantity": 10,
                     "category": "Footwear"
                 },
                 {
                     "id": 4,
                     "name": "Hoodie",
-                    "price": 29.99,
+                    "price": 40000,
                     "quantity": 30,
                     "category": "Clothing"
                 },
                 {
                     "id": 5,
                     "name": "Jacket",
-                    "price": 79.99,
+                    "price": 80000,
                     "quantity": 15,
                     "category": "Clothing"
                 },

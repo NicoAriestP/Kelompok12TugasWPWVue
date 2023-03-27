@@ -93,11 +93,11 @@
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold mb-2">Harga</label>
-              <input type="text" class="form-control" rows="4" v-model="newBarang.price" placeholder="Masukkan Harga Barang">
+              <input type="text" class="form-control" rows="4" v-model="newBarang.price" placeholder="Masukkan Harga Barang" required>
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold mb-2">Stok</label>
-              <input type="number" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang">
+              <input type="number" min="1" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang">
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold mb-2">Pajak</label>
@@ -151,7 +151,7 @@
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold">Stok</label>
-              <input type="number" class="form-control" rows="4" v-model="changeBarang.quantity" placeholder="Masukkan Stok Barang">
+              <input type="number" class="form-control" min="0" rows="4" v-model="changeBarang.quantity" placeholder="Masukkan Stok Barang">
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold mb-2">Pajak</label>
@@ -250,21 +250,38 @@
         components: { Popup },
         methods: {
             insertBarang() {
-                if(this.newBarang.name == "" && this.newBarang.price == ""){
-                    alert("Lengkapi semua data")
-                }else{
-                    this.barangs.push({
-                        "id": this.barangs.length + 1,
-                        "name": this.newBarang.name,
-                        "category": this.newBarang.category,
-                        "price": this.newBarang.price,
-                        "quantity": this.newBarang.quantity,
-                        "tax": this.newBarang.tax
-                    })
-                    this.msgBox = 'tambah data'
-                    this.tutupModal()
-                    this.popup()
+              // Nama,Harga,Kategori Harus Diisi
+                if (!this.newBarang.name || !this.newBarang.price || !this.newBarang.category) {
+                  alert("Semua kolom harus diisi")
+                  return
                 }
+                // Harga harus berupa angka
+                else if (isNaN(parseFloat(this.newBarang.price))) {
+                  alert("Harga harus diisi dengan angka")
+                  return
+                }
+                // Harga tidak boleh kurang dari atau sama dengan 0 rupiah
+                else if (parseFloat(this.newBarang.price <= 0)) {
+                  alert("Harga harus lebih besar dari 0")
+                  return
+                }
+                // Stok tidak boleh kurang dari 0
+                else if (parseFloat(this.newBarang.quantity < 0)) {
+                  alert("Stok harus lebih besar atau sama dengan dari 0")
+                  return
+                }else{
+                this.barangs.push({
+                    "id": this.barangs.length + 1,
+                    "name": this.newBarang.name,
+                    "category": this.newBarang.category,
+                    "price": this.newBarang.price,
+                    "quantity": this.newBarang.quantity,
+                    "tax": this.newBarang.tax
+                })
+                this.msgBox = 'tambah data'
+                this.tutupModal()
+                this.popup()
+              }
             },
             editBarang(index) {
                 this.changeBarang.id = index
@@ -275,8 +292,18 @@
                 this.changeBarang.tax = this.barangs[index].tax
             },
             updateBarang() {
-                if(this.changeBarang.name == "" && this.changeBarang.price == ""){
-                    alert("Lengkapi semua data")
+                if (!this.changeBarang.name || !this.changeBarang.price || !this.changeBarang.category) {
+                  alert("Semua kolom harus diisi")
+                  return
+                }else if (isNaN(this.changeBarang.price)) {
+                  alert("Harga harus diisi dengan angka")
+                  return
+                }else if (this.changeBarang.price <= 0) {
+                  alert("Harga harus lebih besar dari 0")
+                  return
+                }else if (this.changeBarang.quantity <= 0) {
+                  alert("Stok harus lebih besar dari 0")
+                  return
                 }else{
                     this.barangs[this.changeBarang.id].name = this.changeBarang.name
                     this.barangs[this.changeBarang.id].category = this.changeBarang.category

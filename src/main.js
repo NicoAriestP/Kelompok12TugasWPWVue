@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import axios from 'axios'
 
 
 //import Bootstrap, Popper, jQuery
@@ -9,6 +10,7 @@ import 'jquery/dist/jquery.min'
 import 'popper.js/dist/popper.min'
 import 'bootstrap/dist/js/bootstrap.min'
 
+axios.defaults.baseURL = 'http://localhost:3000'
 const app = createApp(App)
 
 app.mount('#app')

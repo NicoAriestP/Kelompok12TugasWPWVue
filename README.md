@@ -23,6 +23,9 @@ Fatihul Hidayat 			 (3122510314)
 
 Azzahra Marshanda Ichsan 		 (3122510621)
 
+# Catatan
+Bila ingin menekan tombol tambah atau edit, lakukan double click supaya modalnya muncul. Solusi belum ditemukan.
+
 # How to run project
 Before you run the project, you must install using command like this to run in terminal:
 

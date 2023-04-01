@@ -53,10 +53,10 @@
                                           <td v-if="barang.tax == 'pph'">PPH (2%)</td>
                                         </div>
                                         <div class="col-2"><td class="text-center">
-                                        <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" @click="editBarang(index)" data-bs-target="#editModal">
+                                        <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" @click="editBarang(barang.id)" data-bs-target="#editModal">
                                           Edit
                                         </button>
-                                        <button class="btn btn-sm btn-danger ml-1" @click="deleteBarang(index)">Delete</button>
+                                        <button class="btn btn-sm btn-danger ml-1" @click="deleteBarang(barang.id)">Delete</button>
                                           </td></div>
                                     </div>
                                 </tr>
@@ -79,43 +79,43 @@
         <form>
           <div class="form-group mb-2">
               <label for="title" class="font-weight-bold mb-2">Nama</label>
-              <input type="text" class="form-control" v-model="newBarang.name" placeholder="Masukkan Nama Barang">
+              <input type="text" class="form-control" v-model="newBarang.name" placeholder="Masukkan Nama Barang" :disabled="disabled">
           </div>
           <div class="form-group mb-2">
               <label for="title" class="font-weight-bold">Kategori</label>
-              <select class="form-select" v-model="newBarang.category" aria-label="Default select example">
+              <select class="form-select" v-model="newBarang.category" aria-label="Default select example" :disabled="disabled">
                 <option selected disabled>Pilih Kategori</option>
                 <option v-for="category in categories" :value="category">{{ category }}</option>
               </select>
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold mb-2">Harga</label>
-              <input type="text" class="form-control" rows="4" v-model="newBarang.price" placeholder="Masukkan Harga Barang" required>
+              <input type="text" class="form-control" rows="4" v-model="newBarang.price" placeholder="Masukkan Harga Barang" required :disabled="disabled">
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold mb-2">Stok</label>
-              <input type="number" min="1" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang">
+              <input type="number" min="1" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang" :disabled="disabled">
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold mb-2">Pajak</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="ppn">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="ppn" :disabled="disabled">
             <label class="form-check-label" for="inlineRadio1">PPN 10%</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="pph">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="pph" :disabled="disabled">
             <label class="form-check-label" for="inlineRadio1">PPH 21 (2%)</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="free">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="free" :disabled="disabled">
             <label class="form-check-label" for="inlineRadio1">Bebas Pajak</label>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" @click="tutupModal" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" @click="insertBarang" class="btn btn-primary">Simpan</button>
+        <button type="button" @click="insertBarang" :disabled="disabled" class="btn btn-primary">Simpan</button>
       </div>
     </div>
   </div>
@@ -133,43 +133,43 @@
         <form>
           <div class="form-group mb-2">
               <label for="title" class="font-weight-bold">Nama</label>
-              <input type="text" class="form-control" v-model="changeBarang.name" placeholder="Masukkan Nama Barang">
+              <input type="text" class="form-control" v-model="changeBarang.name" placeholder="Masukkan Nama Barang" :disabled="disabled2">
           </div>
           <div class="form-group mb-2">
               <label for="title" class="font-weight-bold">Kategori</label>
-              <select class="form-select" v-model="changeBarang.category" aria-label="Default select example">
+              <select class="form-select" v-model="changeBarang.category" aria-label="Default select example" :disabled="disabled2">
                 <option selected disabled>{{ changeBarang.category }}</option>
                 <option v-for="category in categories" :value="category">{{ category }}</option>
               </select>
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold">Harga</label>
-              <input type="text" class="form-control" rows="4" v-model="changeBarang.price" placeholder="Masukkan Harga Barang">
+              <input type="text" class="form-control" rows="4" v-model="changeBarang.price" placeholder="Masukkan Harga Barang" :disabled="disabled2">
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold">Stok</label>
-              <input type="number" class="form-control" min="0" rows="4" v-model="changeBarang.quantity" placeholder="Masukkan Stok Barang">
+              <input type="number" class="form-control" min="0" rows="4" v-model="changeBarang.quantity" placeholder="Masukkan Stok Barang" :disabled="disabled2">
           </div>
           <div class="form-group mb-2">
               <label for="content" class="font-weight-bold mb-2">Pajak</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="ppn">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="ppn" :disabled="disabled2">
             <label class="form-check-label" for="inlineRadio1">PPN 10%</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="pph">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="pph" :disabled="disabled2">
             <label class="form-check-label" for="inlineRadio1">PPH 21 (2%)</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="free">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="free" :disabled="disabled2">
             <label class="form-check-label" for="inlineRadio1">Bebas Pajak</label>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" @click="tutupModal" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" @click="updateBarang" class="btn btn-primary">Simpan</button>
+        <button type="button" @click="updateBarang" class="btn btn-primary" :disabled="disabled2">Simpan</button>
       </div>
     </div>
   </div>
@@ -178,6 +178,7 @@
 <script lang="ts">
     // import Popup from './components/Popup.vue'
     import Swal from 'sweetalert2'
+    import axios from 'axios'
 
     export default {
         data: () => ({
@@ -200,49 +201,13 @@
             show: false,
             validation: [],
             categories: ['Elektronik', 'Fashion', 'Makanan & Minuman', 'Alat Mandi', 'Snack'],
-            barangs: [
-                {
-                    "id": 1,
-                    "name": "T-Shirt",
-                    "price": 15000,
-                    "quantity": 50,
-                    "category": "Clothing",
-                    "tax": "free",
-                },
-                {
-                    "id": 2,
-                    "name": "Jeans",
-                    "price": 40000,
-                    "quantity": 20,
-                    "category": "Clothing",
-                    "tax": "ppn",
-                },
-                {
-                    "id": 3,
-                    "name": "Sneakers",
-                    "price": 60000,
-                    "quantity": 10,
-                    "category": "Footwear",
-                    "tax": "pph",
-                },
-                {
-                    "id": 4,
-                    "name": "Hoodie",
-                    "price": 40000,
-                    "quantity": 30,
-                    "category": "Clothing",
-                    "tax": "pph",
-                },
-                {
-                    "id": 5,
-                    "name": "Jacket",
-                    "price": 80000,
-                    "quantity": 15,
-                    "category": "Clothing",
-                    "tax": "free",
-                },
-            ],
+            barangs: [],
+            disabled: false,
+            disabled2: false,
         }),
+        mounted(){
+            this.loadBarang()
+        },
         created() {
             this.show = false
         },
@@ -250,6 +215,17 @@
             // Popup
         },
         methods: {
+            loadBarang(){
+                axios.get('/products')
+                    .then((res) => {
+                        console.log(res)
+                        this.barangs = res.data
+                    })
+                    .catch((err) => {
+                        Swal.fire('Proses gagal', err, 'error')
+                        return
+                    })
+            },
             insertBarang() {
               // Nama,Harga,Kategori Harus Diisi
                 if (!this.newBarang.name || !this.newBarang.price || !this.newBarang.category) {
@@ -271,28 +247,45 @@
                   Swal.fire('Proses gagal!', 'Stok harus lebih besar atau sama dengan dari 0', 'error')
                   return
                 }else{
-                this.barangs.push({
-                    "id": this.barangs.length + 1,
-                    "name": this.newBarang.name,
-                    "category": this.newBarang.category,
-                    "price": this.newBarang.price,
-                    "quantity": this.newBarang.quantity,
-                    "tax": this.newBarang.tax
-                })
+                    let payloadData = {
+                        "id": this.barangs.length + 1,
+                        "name": this.newBarang.name,
+                        "price": this.newBarang.price,
+                        "quantity": this.newBarang.quantity,
+                        "category": this.newBarang.category,
+                        "tax": this.newBarang.tax
+                    }
 
-                Swal.fire('Proses berhasil!', 'Berhasil tambah barang', 'success')
-                // this.msgBox = 'tambah data'
-                this.tutupModal()
-                // this.popup()
-              }
+                    this.disabled = true
+                    axios.post('/products', payloadData)
+                        .then((res) => {
+                            this.disabled = false
+                            console.log(res)
+                            Swal.fire('Proses berhasil!', 'Berhasil tambah barang', 'success')
+                            this.tutupModal()
+                            this.loadBarang()
+                        })
+                }
             },
-            editBarang(index) {
-                this.changeBarang.id = index
-                this.changeBarang.name = this.barangs[index].name
-                this.changeBarang.category = this.barangs[index].category
-                this.changeBarang.price = this.barangs[index].price
-                this.changeBarang.quantity = this.barangs[index].quantity
-                this.changeBarang.tax = this.barangs[index].tax
+            editBarang(barang_id) {
+                document.getElementById('editModal').style.display = "block";
+                this.disabled2 = true
+                axios.get('/products/' + barang_id)
+                    .then((res) => {
+                        this.disabled2 = false
+                        console.log(res)
+                        // this.barangs = res.data
+                        this.changeBarang.id = barang_id
+                        this.changeBarang.name = res.data.name
+                        this.changeBarang.category = res.data.category
+                        this.changeBarang.price = res.data.price
+                        this.changeBarang.quantity = res.data.quantity
+                        this.changeBarang.tax = res.data.tax
+                    })
+                    .catch((err) => {
+                        Swal.fire('Proses gagal', err, 'error')
+                        return
+                    })
             },
             updateBarang() {
                 if (!this.changeBarang.name || !this.changeBarang.price || !this.changeBarang.category) {
@@ -308,16 +301,30 @@
                   Swal.fire('Proses gagal!', 'Stok harus lebih besar dari 0', 'error')
                   return
                 }else{
-                    this.barangs[this.changeBarang.id].name = this.changeBarang.name
-                    this.barangs[this.changeBarang.id].category = this.changeBarang.category
-                    this.barangs[this.changeBarang.id].price = this.changeBarang.price
-                    this.barangs[this.changeBarang.id].quantity = this.changeBarang.quantity
-                    this.barangs[this.changeBarang.id].tax = this.changeBarang.tax
+                    // this.barangs[this.changeBarang.id].name = this.changeBarang.name
+                    // this.barangs[this.changeBarang.id].category = this.changeBarang.category
+                    // this.barangs[this.changeBarang.id].price = this.changeBarang.price
+                    // this.barangs[this.changeBarang.id].quantity = this.changeBarang.quantity
+                    // this.barangs[this.changeBarang.id].tax = this.changeBarang.tax
 
-                    Swal.fire('Proses berhasil!', 'Berhasil edit barang', 'success')
-                    // this.msgBox = 'edit data'
-                    this.tutupModal()
-                    // this.popup()
+                    let payloadData = {
+                        "id": this.changeBarang.id,
+                        "name": this.changeBarang.name,
+                        "price": this.changeBarang.price,
+                        "quantity": this.changeBarang.quantity,
+                        "category": this.changeBarang.category,
+                        "tax": this.changeBarang.tax
+                    }
+
+                    this.disabled2 = true
+                    axios.put('/products/' + this.changeBarang.id, payloadData)
+                        .then((res) => {
+                            this.disabled2 = false
+                            console.log(res)
+                            Swal.fire('Proses berhasil!', 'Berhasil edit barang', 'success')
+                            this.tutupModal()
+                            this.loadBarang()
+                        })
                 }
             },
             tutupModal() {
@@ -343,19 +350,28 @@
                 box.removeAttribute('class');
                 box.removeAttribute('style');
             },
-            deleteBarang(idx) {
-                this.barangs.splice(idx, 1);
-                // this.msgBox = 'hapus data'
-                Swal.fire('Proses berhasil!', 'Berhasil hapus barang', 'success')
-            },
-            // popup() {
-            //     this.show = true
-            //     // this.show = false
-            //     // setTimeout(() => {
-            //     // }, 2000);
-            //     // setTimeout(() => {
-            //     // }, 2000);
-            // }
+            deleteBarang(barang_id) {
+                // this.barangs.splice(idx, 1);
+                // // this.msgBox = 'hapus data'
+                // Swal.fire('Proses berhasil!', 'Berhasil hapus barang', 'success')
+
+                Swal.fire({
+                    title: "Konfirmasi",
+                    text: "Anda yakin ingin hapus barang ini ?",
+                    showCancelButton: true,
+                    confirmButtonText: `Lanjutkan`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        axios.delete('/products/' + barang_id)
+                        .then((res) => {
+                            console.log(res)
+                            Swal.fire('Proses berhasil!', 'Berhasil hapus barang', 'success')
+                            this.loadBarang()
+                        })
+                    }
+                });
+            }
         },
     }
 </script>

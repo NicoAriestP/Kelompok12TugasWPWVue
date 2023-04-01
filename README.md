@@ -23,3 +23,25 @@ Fatihul Hidayat 			 (3122510314)
 
 Azzahra Marshanda Ichsan 		 (3122510621)
 
+# How to run project
+Before you run the project, you must install using command like this to run in terminal:
+
+npm install
+
+Then, read the script on package.json, using command like this to run in terminal:
+
+npm run dev
+
+And then go to link this: 
+http://localhost:5173/
+
+# How to run json-server
+Read script on package.json, then using command like this to run in terminal:
+
+npm run start-db
+
+Resources
+http://localhost:3000/products
+
+Checkout the documentation:
+https://github.com/typicode/json-server#getting-started

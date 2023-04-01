@@ -1,0 +1,44 @@
+{
+    "products" : [
+        {
+            "id": 1,
+            "name": "T-Shirt",
+            "price": 15000,
+            "quantity": 50,
+            "category": "Clothing",
+            "tax": "free"
+        },
+        {
+            "id": 2,
+            "name": "Jeans",
+            "price": 40000,
+            "quantity": 20,
+            "category": "Clothing",
+            "tax": "ppn"
+        },
+        {
+            "id": 3,
+            "name": "Sneakers",
+            "price": 60000,
+            "quantity": 10,
+            "category": "Footwear",
+            "tax": "pph"
+        },
+        {
+            "id": 4,
+            "name": "Hoodie",
+            "price": 40000,
+            "quantity": 30,
+            "category": "Clothing",
+            "tax": "pph"
+        },
+        {
+            "id": 5,
+            "name": "Jacket",
+            "price": 80000,
+            "quantity": 15,
+            "category": "Clothing",
+            "tax": "free"
+        }
+    ]
+}

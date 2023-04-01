@@ -8,9 +8,6 @@
                     <div class="card-body">
                         <h4>Data Barang</h4>
                         <hr>
-                        <Popup v-if="show">
-                            Berhasil {{ msgBox }}
-                        </Popup>
                         <button type="button" class="btn btn-md btn-success mx-2" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah</button>
                         <!-- <button type="button" class="btn btn-xs btn-secondary" @click="show = false">Tutup</button> -->
                         <table class="table table-responsive table-bordered mt-4 border-1">
@@ -179,7 +176,9 @@
 </div>
 </template>
 <script lang="ts">
-    import Popup from './components/Popup.vue'
+    // import Popup from './components/Popup.vue'
+    import Swal from 'sweetalert2'
+
     export default {
         data: () => ({
             newBarang: {
@@ -247,27 +246,29 @@
         created() {
             this.show = false
         },
-        components: { Popup },
+        components: { 
+            // Popup
+        },
         methods: {
             insertBarang() {
               // Nama,Harga,Kategori Harus Diisi
                 if (!this.newBarang.name || !this.newBarang.price || !this.newBarang.category) {
-                  alert("Semua kolom harus diisi")
+                  Swal.fire('Proses gagal!', 'Semua kolom harus diisi', 'error')
                   return
                 }
                 // Harga harus berupa angka
                 else if (isNaN(this.newBarang.price)) {
-                  alert("Harga harus diisi dengan angka")
+                  Swal.fire('Proses gagal!', 'Harga harus diisi dengan angka', 'error')
                   return
                 }
                 // Harga tidak boleh kurang dari atau sama dengan 0 rupiah
                 else if (this.newBarang.price <= 0) {
-                  alert("Harga harus lebih besar dari 0")
+                  Swal.fire('Proses gagal!', 'Harga harus lebih besar dari 0', 'error')
                   return
                 }
                 // Stok tidak boleh kurang dari 0
                 else if (this.newBarang.quantity < 0) {
-                  alert("Stok harus lebih besar atau sama dengan dari 0")
+                  Swal.fire('Proses gagal!', 'Stok harus lebih besar atau sama dengan dari 0', 'error')
                   return
                 }else{
                 this.barangs.push({
@@ -278,9 +279,11 @@
                     "quantity": this.newBarang.quantity,
                     "tax": this.newBarang.tax
                 })
-                this.msgBox = 'tambah data'
+
+                Swal.fire('Proses berhasil!', 'Berhasil tambah barang', 'success')
+                // this.msgBox = 'tambah data'
                 this.tutupModal()
-                this.popup()
+                // this.popup()
               }
             },
             editBarang(index) {
@@ -293,16 +296,16 @@
             },
             updateBarang() {
                 if (!this.changeBarang.name || !this.changeBarang.price || !this.changeBarang.category) {
-                  alert("Semua kolom harus diisi")
+                  Swal.fire('Proses gagal!', 'Semua kolom harus diisi', 'error')
                   return
                 }else if (isNaN(this.changeBarang.price)) {
-                  alert("Harga harus diisi dengan angka")
+                  Swal.fire('Proses gagal!', 'Harga harus diisi dengan angka', 'error')
                   return
                 }else if (this.changeBarang.price <= 0) {
-                  alert("Harga harus lebih besar dari 0")
+                  Swal.fire('Proses gagal!', 'Harga harus lebih besar dari 0', 'error')
                   return
                 }else if (this.changeBarang.quantity <= 0) {
-                  alert("Stok harus lebih besar dari 0")
+                  Swal.fire('Proses gagal!', 'Stok harus lebih besar dari 0', 'error')
                   return
                 }else{
                     this.barangs[this.changeBarang.id].name = this.changeBarang.name
@@ -311,9 +314,10 @@
                     this.barangs[this.changeBarang.id].quantity = this.changeBarang.quantity
                     this.barangs[this.changeBarang.id].tax = this.changeBarang.tax
 
-                    this.msgBox = 'edit data'
+                    Swal.fire('Proses berhasil!', 'Berhasil edit barang', 'success')
+                    // this.msgBox = 'edit data'
                     this.tutupModal()
-                    this.popup()
+                    // this.popup()
                 }
             },
             tutupModal() {
@@ -334,19 +338,24 @@
                 document.getElementById('editModal').classList.remove("show")
                 document.getElementById('editModal').style.display = "none";
                 document.querySelector('.modal-backdrop').remove();
+
+                const box = document.getElementById('wpw');
+                box.removeAttribute('class');
+                box.removeAttribute('style');
             },
             deleteBarang(idx) {
                 this.barangs.splice(idx, 1);
-                this.msgBox = 'hapus data'
+                // this.msgBox = 'hapus data'
+                Swal.fire('Proses berhasil!', 'Berhasil hapus barang', 'success')
             },
-            popup() {
-                this.show = true
-                // this.show = false
-                // setTimeout(() => {
-                // }, 2000);
-                // setTimeout(() => {
-                // }, 2000);
-            }
+            // popup() {
+            //     this.show = true
+            //     // this.show = false
+            //     // setTimeout(() => {
+            //     // }, 2000);
+            //     // setTimeout(() => {
+            //     // }, 2000);
+            // }
         },
     }
 </script>

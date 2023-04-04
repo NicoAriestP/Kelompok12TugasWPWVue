@@ -8,7 +8,14 @@
                     <div class="card-body">
                         <h4>Data Barang</h4>
                         <hr>
-                        <button type="button" class="btn btn-md btn-success mx-2" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah</button>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-md btn-success mx-2" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah</button>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="search" v-model="query" @keyup="onSearch" placeholder="Cari produk disini..">
+                            </div>
+                        </div>
                         <!-- <button type="button" class="btn btn-xs btn-secondary" @click="show = false">Tutup</button> -->
                         <table class="table table-responsive table-bordered mt-4 border-1">
                             <thead class="thead bg-dark text-light">
@@ -204,6 +211,8 @@
             barangs: [],
             disabled: false,
             disabled2: false,
+            query: '',
+            search: false
         }),
         mounted(){
             this.loadBarang()
@@ -216,15 +225,26 @@
         },
         methods: {
             loadBarang(){
-                axios.get('/products')
+                let url = '/products'
+
+                if (this.search) {
+                    url = '/products?q='+this.query
+                }
+
+                axios.get(url)
                     .then((res) => {
                         console.log(res)
                         this.barangs = res.data
+                        this.search = false
                     })
                     .catch((err) => {
                         Swal.fire('Proses gagal', err, 'error')
                         return
                     })
+            },
+            onSearch(){
+                this.search = true
+                this.loadBarang()
             },
             insertBarang() {
               // Nama,Harga,Kategori Harus Diisi
@@ -247,8 +267,9 @@
                   Swal.fire('Proses gagal!', 'Stok harus lebih besar atau sama dengan dari 0', 'error')
                   return
                 }else{
+                    let getLastId = this.barangs[this.barangs.length - 1].id
                     let payloadData = {
-                        "id": this.barangs.length + 1,
+                        "id": getLastId + 1,
                         "name": this.newBarang.name,
                         "price": this.newBarang.price,
                         "quantity": this.newBarang.quantity,

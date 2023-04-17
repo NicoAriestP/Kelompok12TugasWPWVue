@@ -181,6 +181,15 @@
     </div>
   </div>
 </div>
+<!-- Coba Router -->
+    <div class ="text-center h3">
+            <!-- <a href="">About</a> -->
+            <router-link to="/about">about</router-link>
+           <br>
+           <br>
+            <router-link to="/">Home</router-link>
+        <router-view></router-view>
+    </div>
 </template>
 <script lang="ts">
     // import Popup from './components/Popup.vue'

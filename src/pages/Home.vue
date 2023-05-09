@@ -1,5 +1,185 @@
 <template>
-    <h1>hai</h1>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 rounded shadow-lg" id="card-container">
+                    <div class="card-body">
+                        <h4>Data Barang</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-md btn-success mx-2" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah</button>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="search" v-model="query" @keyup="onSearch" placeholder="Cari produk disini..">
+                            </div>
+                        </div>
+                        <!-- <button type="button" class="btn btn-xs btn-secondary" @click="show = false">Tutup</button> -->
+                        <table class="table table-responsive table-bordered mt-4 border-1">
+                            <thead class="thead bg-dark text-light">
+                                <tr>
+                                    <div class="row">
+                                      <div class="col-1">
+                                        <th scope="col">No</th>
+                                      </div>
+                                      <div class="col-2">
+                                        <th scope="col">Nama</th>
+                                      </div>
+                                      <div class="col-2">
+                                        <th scope="col">Kategori</th>
+                                      </div>
+                                      <div class="col-2">
+                                        <th scope="col">Harga</th>
+                                      </div>
+                                      <div class="col-1">
+                                        <th scope="col">Stok</th>
+                                      </div>
+                                      <div class="col-2">
+                                        <th scope="col">Pajak</th>
+                                      </div>
+                                      <div class="col-2">
+                                        <th scope="col">Aksi</th>
+                                      </div>
+                                    </div>
+                                </tr>
+                                
+                            </thead>
+                            <tbody>
+                                <tr v-for="(barang, index) in barangs" :key="index">
+                                    <div class="row">
+                                        <div class="col-1"><td>{{ index + 1 }}</td></div>
+                                        <div class="col-2"><td>{{ barang.name }}</td></div>
+                                        <div class="col-2"><td>{{ barang.category }}</td></div>
+                                        <div class="col-2"><td>Rp. {{ barang.price.toLocaleString("id-ID") }}</td></div>
+                                        <div class="col-1"><td>{{ barang.quantity }}</td></div>
+                                        <div class="col-2">
+                                          <td v-if="barang.tax == 'free'">Bebas Pajak</td>
+                                          <td v-if="barang.tax == 'ppn'">PPN (10%)</td>
+                                          <td v-if="barang.tax == 'pph'">PPH (2%)</td>
+                                        </div>
+                                        <div class="col-2"><td class="text-center">
+                                        <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" @click="editBarang(barang.id)" data-bs-target="#editModal">
+                                          Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-danger ml-1" @click="deleteBarang(barang.id)">Delete</button>
+                                          </td></div>
+                                    </div>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal untuk Tambah -->
+<div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Barang</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group mb-2">
+              <label for="title" class="font-weight-bold mb-2">Nama</label>
+              <input type="text" class="form-control" v-model="newBarang.name" placeholder="Masukkan Nama Barang" :disabled="disabled">
+          </div>
+          <div class="form-group mb-2">
+              <label for="title" class="font-weight-bold">Kategori</label>
+              <select class="form-select" v-model="newBarang.category" aria-label="Default select example" :disabled="disabled">
+                <option selected disabled>Pilih Kategori</option>
+                <option v-for="category in categories" :value="category">{{ category }}</option>
+              </select>
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold mb-2">Harga</label>
+              <input type="text" class="form-control" rows="4" v-model="newBarang.price" placeholder="Masukkan Harga Barang" required :disabled="disabled">
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold mb-2">Stok</label>
+              <input type="number" min="1" class="form-control" rows="4" v-model="newBarang.quantity" placeholder="Masukkan Stok Barang" :disabled="disabled">
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold mb-2">Pajak</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="ppn" :disabled="disabled">
+            <label class="form-check-label" for="inlineRadio1">PPN 10%</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="pph" :disabled="disabled">
+            <label class="form-check-label" for="inlineRadio1">PPH 21 (2%)</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="newBarang.tax" value="free" :disabled="disabled">
+            <label class="form-check-label" for="inlineRadio1">Bebas Pajak</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" @click="tutupModal" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" @click="insertBarang" :disabled="disabled" class="btn btn-primary">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal untuk Edit -->
+<div class="modal fade" ref="formDialog" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Barang</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group mb-2">
+              <label for="title" class="font-weight-bold">Nama</label>
+              <input type="text" class="form-control" v-model="changeBarang.name" placeholder="Masukkan Nama Barang" :disabled="disabled2">
+          </div>
+          <div class="form-group mb-2">
+              <label for="title" class="font-weight-bold">Kategori</label>
+              <select class="form-select" v-model="changeBarang.category" aria-label="Default select example" :disabled="disabled2">
+                <option selected disabled>{{ changeBarang.category }}</option>
+                <option v-for="category in categories" :value="category">{{ category }}</option>
+              </select>
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold">Harga</label>
+              <input type="text" class="form-control" rows="4" v-model="changeBarang.price" placeholder="Masukkan Harga Barang" :disabled="disabled2">
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold">Stok</label>
+              <input type="number" class="form-control" min="0" rows="4" v-model="changeBarang.quantity" placeholder="Masukkan Stok Barang" :disabled="disabled2">
+          </div>
+          <div class="form-group mb-2">
+              <label for="content" class="font-weight-bold mb-2">Pajak</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="ppn" :disabled="disabled2">
+            <label class="form-check-label" for="inlineRadio1">PPN 10%</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="pph" :disabled="disabled2">
+            <label class="form-check-label" for="inlineRadio1">PPH 21 (2%)</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="free" :disabled="disabled2">
+            <label class="form-check-label" for="inlineRadio1">Bebas Pajak</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" @click="tutupModal" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" @click="updateBarang" class="btn btn-primary" :disabled="disabled2">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 <script lang="ts">
     import Swal from 'sweetalert2'

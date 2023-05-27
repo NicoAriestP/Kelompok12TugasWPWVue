@@ -1,44 +1,172 @@
 {
-    "products" : [
-        {
-            "id": 1,
-            "name": "T-Shirt",
-            "price": 15000,
-            "quantity": 50,
-            "category": "Clothing",
-            "tax": "free"
-        },
-        {
-            "id": 2,
-            "name": "Jeans",
-            "price": 40000,
-            "quantity": 20,
-            "category": "Clothing",
-            "tax": "ppn"
-        },
-        {
-            "id": 3,
-            "name": "Sneakers",
-            "price": 60000,
-            "quantity": 10,
-            "category": "Footwear",
-            "tax": "pph"
-        },
-        {
-            "id": 4,
-            "name": "Hoodie",
-            "price": 40000,
-            "quantity": 30,
-            "category": "Clothing",
-            "tax": "pph"
-        },
-        {
-            "id": 5,
-            "name": "Jacket",
-            "price": 80000,
-            "quantity": 15,
-            "category": "Clothing",
-            "tax": "free"
-        }
-    ]
+  "products": [
+    {
+      "id": 2,
+      "name": "pensil",
+      "price": "1111",
+      "quantity": 1,
+      "category": "Alat Mandi",
+      "tax": "free"
+    },
+    {
+      "id": 3,
+      "name": "pensil 2b",
+      "price": "111",
+      "quantity": 2,
+      "category": "Alat Mandi",
+      "tax": "free"
+    },
+    {
+      "id": 5,
+      "name": "mandi",
+      "price": "9000",
+      "quantity": 1,
+      "category": "Pilih Kategori",
+      "tax": "free"
+    },
+    {
+      "id": 6,
+      "name": "topi",
+      "price": "2000",
+      "quantity": 1,
+      "category": "Makanan & Minuman",
+      "tax": "pph"
+    },
+    {
+      "id": 7,
+      "name": "asdsadasdsds",
+      "price": "1111",
+      "quantity": 1,
+      "category": "Fashion",
+      "tax": "free"
+    },
+    {
+      "id": 8,
+      "name": "ffff",
+      "price": "23232323",
+      "quantity": 1,
+      "category": "Alat Mandi",
+      "tax": "free"
+    },
+    {
+      "id": 9,
+      "name": "23232323",
+      "price": "33333",
+      "quantity": 1,
+      "category": "Makanan & Minuman",
+      "tax": "free"
+    },
+    {
+      "id": 10,
+      "name": "werweded",
+      "price": "23232323",
+      "quantity": 1,
+      "category": "Makanan & Minuman",
+      "tax": "free"
+    },
+    {
+      "id": 11,
+      "name": "2fefef",
+      "price": "232323",
+      "quantity": 1,
+      "category": "Alat Mandi",
+      "tax": "free"
+    },
+    {
+      "id": 12,
+      "name": "ddfsdfsdf",
+      "price": "2323232",
+      "quantity": 1,
+      "category": "Makanan & Minuman",
+      "tax": "free"
+    },
+    {
+      "id": 13,
+      "name": "sdvdvsdvsdv",
+      "price": "232332323",
+      "quantity": 1,
+      "category": "Fashion",
+      "tax": "free"
+    },
+    {
+      "id": 14,
+      "name": "asdasdasdasd",
+      "price": "12121212",
+      "quantity": 1,
+      "category": "Fashion",
+      "tax": "free"
+    },
+    {
+      "id": 15,
+      "name": "vefvfvfv",
+      "price": "22323",
+      "quantity": 1,
+      "category": "Fashion",
+      "tax": "free"
+    },
+    {
+      "id": 16,
+      "name": "asdddddddd",
+      "price": "2",
+      "quantity": 1,
+      "category": "Elektronik",
+      "tax": "free"
+    },
+    {
+      "id": 17,
+      "name": "vfvfvfvfv",
+      "price": "232323",
+      "quantity": 1,
+      "category": "Alat Mandi",
+      "tax": "free"
+    },
+    {
+      "id": 18,
+      "name": "sdvsdvdsv",
+      "price": "1111",
+      "quantity": 1,
+      "category": "Elektronik",
+      "tax": "free"
+    },
+    {
+      "id": 19,
+      "name": "ffffffff",
+      "price": "11",
+      "quantity": 1,
+      "category": "Elektronik",
+      "tax": "free"
+    },
+    {
+      "id": 20,
+      "name": "cccc",
+      "price": "111",
+      "quantity": 1,
+      "category": "Fashion",
+      "tax": "free"
+    },
+    {
+      "id": 21,
+      "name": "eded",
+      "price": "1111",
+      "quantity": 1,
+      "category": "Makanan & Minuman",
+      "tax": "free"
+    },
+    {
+      "id": 22,
+      "name": "ddddd",
+      "price": "1111",
+      "quantity": 1,
+      "category": "Elektronik",
+      "tax": "free"
+    },
+    {
+      "id": 24,
+      "name": "karet gelang",
+      "price": "5000",
+      "quantity": 1,
+      "category": "Fashion",
+      "tax": "free"
+    }
+  ]
 }

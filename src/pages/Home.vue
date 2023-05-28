@@ -161,7 +161,7 @@
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="ppn" :disabled="disabled2">
-            <label class="form-check-label" for="inlineRadio1">PPN 10%</label>
+            <label class="form-check-label" for="inlineRadio1">PPN 11%</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="changeBarang.tax" value="pph" :disabled="disabled2">
